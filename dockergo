@@ -1,0 +1,60 @@
+#!/bin/bash
+
+programname=$0
+
+function usage {
+    echo "usage: $programname [-k | --kill] [-s | --start] [-r | --restart]"
+    echo "  -k  | --kill        kill docker"
+    echo "  -s  | --start       start docker"
+    echo "  -r  | --restart     restart docker"
+    echo "  -ka | --killall     kill all running docker containers"
+    echo "  -h                  display help"
+    echo ""
+    echo "  Defaults to restart if no options are present"
+    exit 1
+}
+
+function start_docker {
+    open -a Docker; 
+    while [ -z "$(docker info 2> /dev/null )" ]; do printf "."; sleep 1; done; 
+    echo ""; 
+    echo "Started ";
+}
+
+function kill_docker {
+    osascript -e 'quit app "Docker"'; 
+    echo ""; 
+    echo "Killed "; 
+}
+
+function restart_docker { 
+    kill_docker
+    start_docker
+}
+
+function kilall_docker { 
+    docker kill $(docker ps)
+}
+
+while [ "$1" != "" ]; do
+    case $1 in
+        -k | --kill )           shift
+                                kill_docker 
+                                exit      
+                                ;;                       
+        -s | --start )          start_docker
+                                exit                              
+                                ;;
+        -r | --restart )        restart_docker    
+                                exit
+                                ;;
+        -ka | --killall )       kilall_docker                                                             
+                                exit
+                                ;;
+        * )                     usage
+                                exit 1
+    esac
+    shift
+done
+
+restart_docker
