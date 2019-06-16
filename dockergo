@@ -3,14 +3,18 @@
 programname=$0
 
 function usage {
-    echo "usage: $programname [-k | --kill] [-s | --start] [-r | --restart]"
-    echo "  -k  | --kill        kill docker"
-    echo "  -s  | --start       start docker"
-    echo "  -r  | --restart     restart docker"
-    echo "  -ka | --killall     kill all running docker containers"
-    echo "  -h                  display help"
+    echo ""
+    echo "Usage: dockergo [options]"
+    echo ""
+    echo "Options:"
+    echo "  -k  | --kill        Kill Docker daemon"
+    echo "  -s  | --start       Start Docker daemon"
+    echo "  -r  | --restart     Restart Docker daemon"
+    echo "  -ka | --killall     Kill all running Docker containers"
+    echo "  -h                  Display help"
     echo ""
     echo "  Defaults to restart if no options are present"
+    echo ""
     exit 1
 }
 
