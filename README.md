@@ -15,3 +15,8 @@ Options:
   Defaults to restart if no options are present
 
 ```
+
+
+#### Install
+
+See [homebrew-tap](https://github.com/nejckorasa/homebrew-tap)
