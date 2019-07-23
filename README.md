@@ -1,6 +1,6 @@
 # mac-docker-go
 
-Script to make your life easier starting/restarting/killing Docker daemon on MacOS
+Script to make your life easier starting/restarting/killing Docker daemon on MacOS. It is *not* written in Go.
 
 ```
 Usage: dockergo [options]
@@ -18,5 +18,9 @@ Options:
 
 
 #### Install
+
+```
+$ brew install nejckorasa/tap/dockergo
+```
 
 See [homebrew-tap](https://github.com/nejckorasa/homebrew-tap)
