@@ -20,7 +20,14 @@ function usage {
 
 function start_docker {
     open -a Docker; 
-    while [ -z "$(docker info 2> /dev/null )" ]; do printf "."; sleep 1; done; 
+    DOCKER_INFO_OUTPUT="$(docker info 2> /dev/null)";
+
+    while [[ -z ${DOCKER_INFO_OUTPUT} ]] || [[ ${DOCKER_INFO_OUTPUT} == *"ERROR"* ]]; do 
+        printf "."; 
+        sleep 1; 
+        DOCKER_INFO_OUTPUT="$(docker info 2> /dev/null)";
+    done 
+
     echo ""; 
     echo "Started ";
 }
