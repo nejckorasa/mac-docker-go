@@ -17,6 +17,19 @@ Options:
 ```
 
 
+Example usage:
+
+```bash
+$ dckr
+```
+
+or killing all running containers:
+
+```bash
+$ dckr -ka
+```
+
+
 #### Install
 
 ```
