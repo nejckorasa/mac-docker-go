@@ -3,7 +3,7 @@
 Script to make your life easier starting/restarting/killing Docker daemon on MacOS. It is *not* written in Go.
 
 ```
-Usage: dockergo [options]
+Usage: dckr [options]
 
 Options:
   -k  | --kill        Kill Docker daemon
@@ -20,7 +20,7 @@ Options:
 #### Install
 
 ```
-$ brew install nejckorasa/tap/dockergo
+$ brew install nejckorasa/tap/dckr
 ```
 
 See [homebrew-tap](https://github.com/nejckorasa/homebrew-tap)
