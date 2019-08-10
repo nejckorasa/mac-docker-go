@@ -2,6 +2,18 @@
 
 Script to make your life easier starting/restarting/killing Docker daemon on MacOS. It is *not* written in Go.
 
+
+
+### Install
+
+```
+$ brew install nejckorasa/tap/dckr
+```
+
+See [homebrew-tap](https://github.com/nejckorasa/homebrew-tap)
+
+### How to use dckr command
+
 ```
 Usage: dckr [options]
 
@@ -28,12 +40,3 @@ or killing all running containers:
 ```bash
 $ dckr -ka
 ```
-
-
-#### Install
-
-```
-$ brew install nejckorasa/tap/dckr
-```
-
-See [homebrew-tap](https://github.com/nejckorasa/homebrew-tap)
