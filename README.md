@@ -29,12 +29,18 @@ Options:
 ```
 
 
-Example usage:
+#### Examples
+
+Restart:
 
 ```bash
 $ dckr
 ```
+or killing docker daemon:
 
+```bash
+$ dckr -k
+```
 or killing all running containers:
 
 ```bash
