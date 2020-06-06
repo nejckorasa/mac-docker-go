@@ -2,70 +2,160 @@
 
 programname=$0
 
-function usage {
-    echo ""
-    echo "Usage: dockergo [options]"
+function usage() {
+    echo "Start/stop docker daemon and kill/remove/stop/prune containers, images, volumes..."
+    echo "Usage: dckr [options]"
     echo ""
     echo "Options:"
-    echo "  -k  | --kill        Kill Docker daemon"
-    echo "  -s  | --start       Start Docker daemon"
-    echo "  -r  | --restart     Restart Docker daemon"
-    echo "  -ka | --killall     Kill all running Docker containers"
-    echo "  -h                  Display help"
+    echo "  k     | --kill                 Kill daemon"
+    echo "  s     | --start                Start daemon"
+    echo "  r     | --restart              Restart daemon"
+    echo "  ds    | --status               Status of daemon"
     echo ""
-    echo "  Defaults to restart if no options are present"
+    echo "  ka    | --kill-all             Kill all running containers"
+    echo "  sa    | --stop-all             Stop all containers"
+    echo "  rma   | --remove-all           Remove all containers"
+    echo "  rmai  | --remove-all-images    Remove all images"
+    echo ""
+    echo "  ip    | --image-prune          Remove dangling images"
+    echo "  ipa   | --image-prune-all      Remove all unused images"
+    echo "  vp    | --volume-prune         Remove all unused volumes"
+    echo "  np    | --network-prune        Remove all unused network"
+    echo "  sp    | --system-prune         Remove all unused objects"
+    echo ""
+    echo "  -h                             Display help"
     echo ""
     exit 1
 }
 
-function start_docker {
-    open -a Docker; 
-    DOCKER_INFO_OUTPUT="$(docker info 2> /dev/null)";
+function start_daemon() {
+    open -a Docker
+    DOCKER_INFO_OUTPUT="$(docker info 2>/dev/null)"
 
-    while [[ -z ${DOCKER_INFO_OUTPUT} ]] || [[ ${DOCKER_INFO_OUTPUT} == *"ERROR"* ]]; do 
-        printf "."; 
-        sleep 1; 
-        DOCKER_INFO_OUTPUT="$(docker info 2> /dev/null)";
-    done 
+    while [[ -z ${DOCKER_INFO_OUTPUT} ]] || [[ ${DOCKER_INFO_OUTPUT} == *"ERROR"* ]]; do
+        printf "."
+        sleep 1
+        DOCKER_INFO_OUTPUT="$(docker info 2>/dev/null)"
+    done
 
-    echo ""; 
-    echo "Started ";
+    echo "Started "
 }
 
-function kill_docker {
-    osascript -e 'quit app "Docker"'; 
-    echo ""; 
-    echo "Killed "; 
+function kill_daemon() {
+    osascript -e 'quit app "Docker"'
+    echo "Killed "
 }
 
-function restart_docker { 
-    kill_docker
-    start_docker
+function restart_daemon() {
+    kill_daemon
+    start_daemon
 }
 
-function kilall_docker { 
-    docker kill $(docker ps)
+function daemon_status() {
+    if (ps aux | grep "Docker.app/Contents/MacOS/Docker" | grep -v "grep" >/dev/null); then
+        echo "Running"
+    else
+        echo "Not Running"
+    fi
+}
+
+function stop_all_containers() {
+    docker stop $(docker ps -aq 2>/dev/null)
+}
+
+function kill_all_containers() {
+    for cid in $(docker ps -q); do docker kill $cid; done
+}
+
+function rmall_containers() {
+    for cid in $(docker ps -aq); do docker rm -f $cid; done
+}
+
+function rmall_images() {
+    for cid in $(docker images -aq); do docker image rm -f $cid; done
+}
+
+function image_prune() {
+    docker image prune
+}
+
+function image_prune_all() {
+    docker image prune -a
+}
+
+function volume_prune() {
+    docker volume prune
+}
+
+function network_prune() {
+    docker network prune
+}
+
+function system_prune() {
+    docker system prune
 }
 
 while [ "$1" != "" ]; do
     case $1 in
-        -k | --kill )           shift
-                                kill_docker 
-                                exit      
-                                ;;                       
-        -s | --start )          start_docker
-                                exit                              
-                                ;;
-        -r | --restart )        restart_docker    
-                                exit
-                                ;;
-        -ka | --killall )       kilall_docker                                                             
-                                exit
-                                ;;
-        * )                     usage
-                                exit 1
+    k | -k | --kill)
+        shift
+        kill_daemon
+        exit
+        ;;
+    s | -s | --start)
+        start_daemon
+        exit
+        ;;
+    r | -r | --restart)
+        restart_daemon
+        exit
+        ;;
+    st | -st | --status)
+        daemon_status
+        exit
+        ;;
+    ka | -ka | --kill-all)
+        kill_all_containers
+        exit
+        ;;
+    sa | -sa | --stop-all)
+        stop_all_containers
+        exit
+        ;;
+    rma | -rma | --remove-all)
+        rmall_containers
+        exit
+        ;;
+    rmai | -rmai | --remove-all-images)
+        rmall_images
+        exit
+        ;;
+    ip | -ip | --image-prune)
+        image_prune
+        exit
+        ;;
+    ipa | -ipa | --image-prune-all)
+        image_prune_all
+        exit
+        ;;
+    vp | -vp | --volume-prune)
+        volume_prune
+        exit
+        ;;
+    np | -np | --network-prune)
+        network_prune
+        exit
+        ;;
+    sp | -sp | --system-prune)
+        system_prune
+        exit
+        ;;
+    *)
+        usage
+        exit 1
+        ;;
     esac
     shift
 done
 
-restart_docker
+usage
