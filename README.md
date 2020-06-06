@@ -48,7 +48,7 @@ Options:
 Restart docker daemon:
 
 ```console
-$ dckr
+$ dckr r
 ```
 
 Kill docker daemon:
