@@ -10,7 +10,7 @@ It supports:
 
 ## Install
 
-```
+```console
 $ brew install nejckorasa/tap/dckr
 ```
 
@@ -18,7 +18,7 @@ See [homebrew-tap](https://github.com/nejckorasa/homebrew-tap)
 
 ## Usage
 
-```console
+```bash
 Start/stop docker daemon and kill/remove/stop/prune containers, images, volumes...
 Usage: dckr [options]
 
