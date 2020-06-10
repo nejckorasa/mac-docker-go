@@ -3,8 +3,9 @@
 programname=$0
 
 function usage() {
-    echo "Start/stop docker daemon and kill/remove/stop/prune containers, images, volumes..."
     echo "Usage: dckr [options]"
+    echo ""
+    echo "Start/stop docker daemon and kill/remove/stop/prune containers, images, volumes..."
     echo ""
     echo "Options:"
     echo "  k     | --kill                 Kill daemon"
@@ -29,21 +30,28 @@ function usage() {
 }
 
 function start_daemon() {
-    open -a Docker
-    DOCKER_INFO_OUTPUT="$(docker info 2>/dev/null)"
+    open -a Docker -g
 
-    while [[ -z ${DOCKER_INFO_OUTPUT} ]] || [[ ${DOCKER_INFO_OUTPUT} == *"ERROR"* ]]; do
-        printf "."
-        sleep 1
-        DOCKER_INFO_OUTPUT="$(docker info 2>/dev/null)"
+    local total=0
+    local spin="▁▂▃▄▅▆▇█▇▆▅▄▃▂▁"
+    local charwidth=3
+
+    while ! _daemon_status; do
+        local i=$(((i + $charwidth) % ${#spin}))
+        printf "\r[ ${spin:$i:$charwidth} Starting ${total}ms ]"
+        total=$((total + 100))
+        sleep .1
     done
-
-    echo "Started "
+    if [ ${total} = 0 ]; then
+        printf "\rAlready running\n"
+    else
+        printf "\rStarted [${total}ms]                       \n"
+    fi
 }
 
 function kill_daemon() {
     osascript -e 'quit app "Docker"'
-    echo "Killed "
+    echo "Killed"
 }
 
 function restart_daemon() {
@@ -52,10 +60,19 @@ function restart_daemon() {
 }
 
 function daemon_status() {
-    if (ps aux | grep "Docker.app/Contents/MacOS/Docker" | grep -v "grep" >/dev/null); then
-        echo "Running"
-    else
+    if ! _daemon_status; then
         echo "Not Running"
+    else
+        echo "Running"
+    fi
+}
+
+function _daemon_status() {
+    local DOCKER_INFO_OUTPUT="$(docker info 2>/dev/null)"
+    if [[ -z ${DOCKER_INFO_OUTPUT} ]] || [[ ${DOCKER_INFO_OUTPUT} == *"ERROR"* ]]; then
+        return 1
+    else
+        return 0
     fi
 }
 

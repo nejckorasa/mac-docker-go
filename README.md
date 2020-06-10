@@ -19,8 +19,9 @@ See [homebrew-tap](https://github.com/nejckorasa/homebrew-tap)
 ## Usage
 
 ```bash
-Start/stop docker daemon and kill/remove/stop/prune containers, images, volumes...
 Usage: dckr [options]
+
+Start/stop docker daemon and kill/remove/stop/prune containers, images, volumes...
 
 Options:
   k     | --kill                 Kill daemon
@@ -47,7 +48,7 @@ Options:
 
 Restart docker daemon:
 
-```console
+```bash
 $ dckr r
 ```
 
