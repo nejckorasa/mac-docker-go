@@ -27,7 +27,7 @@ Options:
   k     | --kill                 Kill daemon
   s     | --start                Start daemon
   r     | --restart              Restart daemon
-  ds    | --status               Status of daemon
+  st    | --status               Status of daemon
 
   ka    | --kill-all             Kill all running containers
   sa    | --stop-all             Stop all containers

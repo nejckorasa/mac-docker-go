@@ -11,7 +11,7 @@ function usage() {
     echo "  k     | --kill                 Kill daemon"
     echo "  s     | --start                Start daemon"
     echo "  r     | --restart              Restart daemon"
-    echo "  ds    | --status               Status of daemon"
+    echo "  st    | --status               Status of daemon"
     echo ""
     echo "  ka    | --kill-all             Kill all running containers"
     echo "  sa    | --stop-all             Stop all containers"
