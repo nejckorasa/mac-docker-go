@@ -1,11 +1,13 @@
 # mac-docker-go
 
+[![](https://gist.githubusercontent.com/nejckorasa/2e875781840901dbb24dfac828777eff/raw/cde2261a9d1e76c23bd51db4a6d36bbd869b7c01/dckr.gif)](#)
+
 Script to make your life easier with Docker daemon on MacOS.
 
 It supports:
-- starting/restarting/status of Docker demon
+- starting/restarting/status of Docker daemon
 - killing/removing Docker containers, images
-- pruning images. volumes, networks...
+- pruning images, volumes, networks...
 
 
 ## Install
